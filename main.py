@@ -87,7 +87,7 @@ class Ui_MainWindow(object):
     def setDirectory(self):
         global saveDirectory
         saveDirectory = QFileDialog.getExistingDirectory(None, "Select folder", "")
-        if saveDirectory[-1] is not "/":
+        if saveDirectory[-1] != "/":
             saveDirectory += "/"
         self.label_2.setText(saveDirectory)
         self.convertButton.setEnabled(True)
