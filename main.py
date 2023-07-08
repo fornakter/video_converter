@@ -94,8 +94,14 @@ class Ui_MainWindow(object):
 
     def converting(self):
         global saveDirectory, fileName
+        try:
+            print(saveDirectory, 'jest zmienna')
+        except:
+            print("Brak zmiennej")
         onlyFileName = Path(fileName[0]).stem
+        saveDirectory = ""
         saveDirectory = f"{saveDirectory}{onlyFileName}.mp4"
+        print(saveDirectory, 'save directory')
         subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-codec', 'copy', saveDirectory], check=True)
         self.statusbar.showMessage('Done!')
         self.convertButton.setEnabled(True)
