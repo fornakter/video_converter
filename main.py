@@ -1,3 +1,5 @@
+import pathlib
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 import subprocess
@@ -80,7 +82,7 @@ class Ui_MainWindow(object):
 
     def setFile(self):
         global fileName
-        fileName = QFileDialog.getOpenFileName(None, "1", "", "MKV files (*.mkv);;All files (*)")
+        fileName = QFileDialog.getOpenFileName(None, "1", "", "MKV files (*.mkv);;AVI files (*.avi);;All files (*)")
         self.label.setText(fileName[0])
         self.saveButton.setEnabled(True)
 
@@ -92,24 +94,28 @@ class Ui_MainWindow(object):
         self.label_2.setText(saveDirectory)
         self.convertButton.setEnabled(True)
 
+        # Converting
     def converting(self):
         global saveDirectory, fileName
-        try:
-            print(saveDirectory, 'jest zmienna')
-        except:
-            print("Brak zmiennej")
+        fileExtension = fileName[0][-4:]
         onlyFileName = Path(fileName[0]).stem
-        saveDirectory = ""
-        saveDirectory = f"{saveDirectory}{onlyFileName}.mp4"
-        print(saveDirectory, 'save directory')
-        subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-codec', 'copy', saveDirectory], check=True)
+        saveDirectory = f"{saveDirectory}{onlyFileName}{fileExtension}"
+        if fileExtension == ".mkv":
+            subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-codec', 'copy', "-y", saveDirectory], check=True)
+        else:
+            subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-vcodec', 'copy', '-acodec', 'copy', saveDirectory], check=True)
         self.statusbar.showMessage('Done!')
         self.convertButton.setEnabled(True)
+        self.fileButton.setEnabled(True)
+        self.saveButton.setEnabled(True)
+        saveDirectory = ""
 
-        # Convert it!
+        # Convert button
     def convertIt(self):
         self.statusbar.showMessage('Im working...')
         self.convertButton.setEnabled(False)
+        self.fileButton.setEnabled(False)
+        self.saveButton.setEnabled(False)
         try:
             threading.Thread(target=self.converting).start()
         except Exception as e:
