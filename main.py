@@ -61,6 +61,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        # Show window title with info
     def showInfo(self):
         msg = QMessageBox()
         msg.setWindowTitle("Info...")
@@ -80,12 +81,14 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "None"))
         self.infoButton.setText(_translate("MainWindow", "Info"))
 
+        # Select file, dialog window
     def setFile(self):
         global fileName
         fileName = QFileDialog.getOpenFileName(None, "1", "", "MKV files (*.mkv);;AVI files (*.avi);;All files (*)")
         self.label.setText(fileName[0])
         self.saveButton.setEnabled(True)
 
+        # Select directory to save, dialog window
     def setDirectory(self):
         global saveDirectory
         saveDirectory = QFileDialog.getExistingDirectory(None, "Select folder", "")
@@ -99,16 +102,15 @@ class Ui_MainWindow(object):
         global saveDirectory, fileName
         fileExtension = fileName[0][-4:]
         onlyFileName = Path(fileName[0]).stem
-        saveDirectory = f"{saveDirectory}{onlyFileName}{fileExtension}"
+        saveToDirectory = f"{saveDirectory}{onlyFileName}{fileExtension}"
         if fileExtension == ".mkv":
-            subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-codec', 'copy', "-y", saveDirectory], check=True)
+            subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-codec', 'copy', '-y', saveToDirectory], check=True)
         else:
-            subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-vcodec', 'copy', '-acodec', 'copy', saveDirectory], check=True)
+            subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-vcodec', 'copy', '-acodec', 'copy', saveToDirectory], check=True)
         self.statusbar.showMessage('Done!')
         self.convertButton.setEnabled(True)
         self.fileButton.setEnabled(True)
         self.saveButton.setEnabled(True)
-        saveDirectory = ""
 
         # Convert button
     def convertIt(self):
