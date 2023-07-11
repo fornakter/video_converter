@@ -102,7 +102,7 @@ class Ui_MainWindow(object):
         global saveDirectory, fileName
         fileExtension = fileName[0][-4:]
         onlyFileName = Path(fileName[0]).stem
-        saveToDirectory = f"{saveDirectory}{onlyFileName}{fileExtension}"
+        saveToDirectory = f"{saveDirectory}{onlyFileName}.mp4"
         if fileExtension == ".mkv":
             subprocess.run(['ffmpeg', '-i', str(fileName[0]), '-codec', 'copy', '-y', saveToDirectory], check=True)
         else:
