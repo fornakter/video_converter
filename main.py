@@ -65,7 +65,10 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def folderButtonClick(self):
-        pass
+        selectFolderToOpen = QFileDialog.getExistingDirectory(None, "Select folder", "")
+        self.label.setText(selectFolderToOpen)
+        print(selectFolderToOpen)
+        self.saveToFolderButton.setEnabled(True)
 
         # Show window title with info
     def showInfo(self):
