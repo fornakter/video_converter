@@ -1,5 +1,5 @@
 # video_converter
-Convert video files from .mkv to mp4\
+Convert files .avi or .mkv to mp4\
 Its very simple and very fast!\
 Try it!\
 Chose file(s)\
