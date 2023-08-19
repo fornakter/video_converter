@@ -5,7 +5,7 @@ Try it!\
 Chose file(s)\
 Select directory to save new files\
 Convert it!\
-Dont forget to click "Info"\
+Dont forget to click "Info"
 
 # Used packages:
 PyQt\
