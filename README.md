@@ -7,7 +7,7 @@ Select directory to save new files\
 Convert it!\
 Dont forget to click "Info"\
 
-# Used packages:\
+# Used packages:
 PyQt\
 Subprocess\
 Threading\
